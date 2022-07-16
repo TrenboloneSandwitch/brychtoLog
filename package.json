@@ -1,0 +1,48 @@
+{
+  "private": true,
+  "sideEffects": false,
+  "prisma": {
+    "seed": "node --require esbuild-register prisma/seed.ts"
+  },
+  "scripts": {
+    "build": "run-s \"build:*\"",
+    "build:css": "npm run generate:css -- --minify",
+    "build:remix": "remix build",
+    "dev": "run-p \"dev:*\"",
+    "dev:css": "npm run generate:css -- --watch",
+    "dev:remix": "remix dev",
+    "generate:css": "npx tailwindcss -o ./app/tailwind.css",
+    "start": "remix-serve build"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^2.9.6",
+    "@prisma/client": "^4.0.0",
+    "@remix-run/node": "^1.6.5",
+    "@remix-run/react": "^1.6.5",
+    "@remix-run/serve": "^1.6.5",
+    "classnames": "^2.3.1",
+    "qs": "^6.11.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.33.1",
+    "uuid": "^8.3.2",
+    "zod": "^3.17.3"
+  },
+  "devDependencies": {
+    "@remix-run/dev": "^1.6.5",
+    "@remix-run/eslint-config": "^1.6.5",
+    "@types/qs": "^6.9.7",
+    "@types/react": "^17.0.45",
+    "@types/react-dom": "^17.0.17",
+    "@types/uuid": "^8.3.4",
+    "esbuild-register": "^3.3.3",
+    "eslint": "^8.15.0",
+    "npm-run-all": "^4.1.5",
+    "prisma": "^4.0.0",
+    "tailwindcss": "^3.1.6",
+    "typescript": "^4.7.4"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
