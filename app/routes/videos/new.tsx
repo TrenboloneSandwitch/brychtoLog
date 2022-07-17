@@ -42,21 +42,16 @@ export const action: ActionFunction = async ({ request }) => {
     return json({ errors }, { status: 400 });
   }
 
-  return null;
-  // const XXXX = Object.fromEntries(formData);
-  // console.log("XXXX: ", XXXX);
-  // const name = form.get("name");
+  const prismaQueryData = {
+    ...formData,
+    playlists: {
+      createMany: {
+        data: [...formData.playlists],
+      },
+    },
+  };
 
-  // const url = form.get("playlistName");
-  // console.log("url: ", url);
-  // console.log("form: ", form);
-  // return redirect(`/videos/new`);
-
-  // if (typeof name !== "string" || typeof url !== "string") {
-  //   throw new Error("Form not submitted correctly.");
-  // }
-
-  // const fields = { name, url };
+  const video = await db.video.create({ data: prismaQueryData });
 
   // const video = await db.video.create({ data: fields });
 };
