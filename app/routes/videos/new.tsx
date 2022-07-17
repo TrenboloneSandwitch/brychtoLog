@@ -3,24 +3,25 @@ import type { ActionFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
 import cs from "classnames";
-import React, { useState } from "react";
+import React from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
+import { db } from "~/utils/db.server";
 import { validationAction } from "~/utils/validation";
 
-type SchemaT = z.infer<typeof Schema>;
+export type VideoSchemaT = z.infer<typeof Schema>;
 
 const Schema = z.object({
   name: z
     .string()
     .min(3, { message: "Name must be at least 3 characters long" }),
-  link: z
+  url: z
     .string({ required_error: "URL is required" })
     .url({ message: "Invalid url" }),
-  playlist: z.array(
+  playlists: z.array(
     z.object({
       name: z
-        .string({ required_error: "Playlist name is required" })
+        .string({ required_error: "playlists name is required" })
         .min(3, { message: "Name must be at least 3 characters long" }),
       time: z
         .string({ required_error: "Time is required" })
@@ -32,7 +33,7 @@ const Schema = z.object({
 });
 
 export const action: ActionFunction = async ({ request }) => {
-  const { formData, errors } = await validationAction<SchemaT>({
+  const { formData, errors } = await validationAction<VideoSchemaT>({
     request,
     schema: Schema,
   });
