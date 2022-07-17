@@ -53,36 +53,31 @@ export const action: ActionFunction = async ({ request }) => {
 
   const video = await db.video.create({ data: prismaQueryData });
 
-  // const video = await db.video.create({ data: fields });
+  return json({ video }, { status: 200 });
 };
 
 export default function NewVideoRoute() {
   const isInitalRender = React.useRef(true);
   const formRef = React.useRef(null);
   const videoFetcher = useFetcher();
-  const [triggerClientValidation, setTriggerClientValidation] = useState(false);
 
   const {
     control,
-    trigger,
     register,
     watch,
-    getValues,
-    formState: { errors, isSubmitting, isDirty },
-  } = useForm<SchemaT>({
+    formState: { errors, isSubmitting },
+  } = useForm<VideoSchemaT>({
     resolver: zodResolver(Schema),
     defaultValues: {
       name: "",
-      link: "",
-      playlist: [{ name: "", time: "" }],
+      url: "",
+      playlists: [{ name: "", time: "" }],
     },
   });
 
-  console.log("errors: ", errors);
-
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "playlist",
+    name: "playlists",
   });
 
   const appendvideo = React.useCallback(() => {
@@ -99,37 +94,8 @@ export default function NewVideoRoute() {
     }
   }, [appendvideo, fields]);
 
-  const memoizedVals = React.useMemo(
-    () => JSON.stringify(getValues()),
-    [getValues()]
-  );
-
-  React.useEffect(() => {
-    const waitForErrors = async () => {
-      const triggerResult = await trigger();
-      if (triggerResult) {
-        console.log("here we go");
-        videoFetcher.submit(formRef.current, { method: "post" });
-      }
-    };
-
-    if (isDirty || triggerClientValidation) {
-      waitForErrors();
-    }
-  }, [isDirty, memoizedVals, trigger, triggerClientValidation]);
-
-  function onSubmit(e: React.SyntheticEvent) {
-    e.preventDefault();
-    setTriggerClientValidation(true);
-  }
-
   return (
-    <videoFetcher.Form
-      method="post"
-      action="/videos/new"
-      ref={formRef}
-      onSubmit={onSubmit}
-    >
+    <videoFetcher.Form method="post" action="/videos/new" ref={formRef}>
       <fieldset>
         <div className="mb-4">
           <label className="block mb-1 md:mb-0 pr-4">
@@ -153,15 +119,15 @@ export default function NewVideoRoute() {
             URL:
             <input
               disabled={isSubmitting}
-              {...register("link")}
-              name="link"
+              {...register("url")}
+              name="url"
               placeholder="Link"
               className="border-2 border-gray-200 rounded w-full"
             />
           </label>
-          {(videoFetcher?.data?.errors?.link || errors.link) && (
+          {(videoFetcher?.data?.errors?.url || errors.url) && (
             <p className="text-sm text-red-600 mt-1">
-              {videoFetcher?.data?.errors?.link || errors?.link?.message}
+              {videoFetcher?.data?.errors?.url || errors?.url?.message}
             </p>
           )}
         </div>
@@ -172,32 +138,32 @@ export default function NewVideoRoute() {
             <label className="mb-1 w-1/3">
               Play Name:
               <input
-                {...register(`playlist.${videoIndex}.name`)}
-                name={`playlist[${videoIndex}][name]`}
-                placeholder="Playlist name"
+                {...register(`playlists.${videoIndex}.name`)}
+                name={`playlists[${videoIndex}][name]`}
+                placeholder="playlists name"
                 className="border-2 border-gray-200 rounded w-full"
               />
-              {(videoFetcher?.data?.errors?.playlist?.[videoIndex]?.name ||
-                errors?.playlist?.[videoIndex]?.name) && (
+              {(videoFetcher?.data?.errors?.playlists?.[videoIndex]?.name ||
+                errors?.playlists?.[videoIndex]?.name) && (
                 <p className="text-sm text-red-600 mt-1 w-full">
-                  {videoFetcher?.data?.errors?.playlist?.[videoIndex]?.name ||
-                    errors?.playlist?.[videoIndex]?.name?.message}
+                  {videoFetcher?.data?.errors?.playlists?.[videoIndex]?.name ||
+                    errors?.playlists?.[videoIndex]?.name?.message}
                 </p>
               )}
             </label>
             <label className="mb-1 px-3 w-1/3">
               Time:
               <input
-                {...register(`playlist.${videoIndex}.time`)}
-                name={`playlist[${videoIndex}][time]`}
+                {...register(`playlists.${videoIndex}.time`)}
+                name={`playlists[${videoIndex}][time]`}
                 placeholder="mm:ss neb hh:mm:ss"
                 className="border-2 border-gray-200 rounded w-full"
               />
-              {(videoFetcher?.data?.errors?.playlist?.[videoIndex]?.time ||
-                errors?.playlist?.[videoIndex]?.time) && (
+              {(videoFetcher?.data?.errors?.playlists?.[videoIndex]?.time ||
+                errors?.playlists?.[videoIndex]?.time) && (
                 <p className="text-sm text-red-600 mt-1 w-full">
-                  {videoFetcher?.data?.errors?.playlist?.[videoIndex]?.time ||
-                    errors?.playlist?.[videoIndex]?.time?.message}
+                  {videoFetcher?.data?.errors?.playlists?.[videoIndex]?.time ||
+                    errors?.playlists?.[videoIndex]?.time?.message}
                 </p>
               )}
             </label>
