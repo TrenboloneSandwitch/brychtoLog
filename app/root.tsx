@@ -1,12 +1,5 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node"; // or "@remix-run/cloudflare"
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 
 import globalStylesheetUrl from "./tailwind.css";
 

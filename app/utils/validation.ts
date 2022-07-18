@@ -4,10 +4,7 @@ import type { validateActionT } from "~/types";
 
 type ActionErrorT<T> = Partial<Record<keyof T, string>>;
 
-export async function validationAction<ActionInput>({
-  request,
-  schema,
-}: validateActionT) {
+export async function validationAction<ActionInput>({ request, schema }: validateActionT) {
   const text = await request.text();
   console.log("text: ", text);
   const body = qs.parse(text);
