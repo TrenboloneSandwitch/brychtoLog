@@ -12,12 +12,8 @@ import { validationAction } from "~/utils/validation";
 export type VideoSchemaT = z.infer<typeof Schema>;
 
 const Schema = z.object({
-  name: z
-    .string()
-    .min(3, { message: "Name must be at least 3 characters long" }),
-  url: z
-    .string({ required_error: "URL is required" })
-    .url({ message: "Invalid url" }),
+  name: z.string().min(3, { message: "Name must be at least 3 characters long" }),
+  url: z.string({ required_error: "URL is required" }).url({ message: "Invalid url" }),
   playlists: z.array(
     z.object({
       name: z
@@ -109,9 +105,7 @@ export default function NewVideoRoute() {
             />
           </label>
           {(videoFetcher?.data?.errors?.name || errors.name) && (
-            <p className="text-sm text-red-600 mt-1">
-              {videoFetcher?.data?.errors?.name || errors?.name?.message}
-            </p>
+            <p className="text-sm text-red-600 mt-1">{videoFetcher?.data?.errors?.name || errors?.name?.message}</p>
           )}
         </div>
         <div className="mb-4">
@@ -126,9 +120,7 @@ export default function NewVideoRoute() {
             />
           </label>
           {(videoFetcher?.data?.errors?.url || errors.url) && (
-            <p className="text-sm text-red-600 mt-1">
-              {videoFetcher?.data?.errors?.url || errors?.url?.message}
-            </p>
+            <p className="text-sm text-red-600 mt-1">{videoFetcher?.data?.errors?.url || errors?.url?.message}</p>
           )}
         </div>
       </fieldset>
@@ -143,8 +135,7 @@ export default function NewVideoRoute() {
                 placeholder="playlists name"
                 className="border-2 border-gray-200 rounded w-full"
               />
-              {(videoFetcher?.data?.errors?.playlists?.[videoIndex]?.name ||
-                errors?.playlists?.[videoIndex]?.name) && (
+              {(videoFetcher?.data?.errors?.playlists?.[videoIndex]?.name || errors?.playlists?.[videoIndex]?.name) && (
                 <p className="text-sm text-red-600 mt-1 w-full">
                   {videoFetcher?.data?.errors?.playlists?.[videoIndex]?.name ||
                     errors?.playlists?.[videoIndex]?.name?.message}
@@ -159,8 +150,7 @@ export default function NewVideoRoute() {
                 placeholder="mm:ss neb hh:mm:ss"
                 className="border-2 border-gray-200 rounded w-full"
               />
-              {(videoFetcher?.data?.errors?.playlists?.[videoIndex]?.time ||
-                errors?.playlists?.[videoIndex]?.time) && (
+              {(videoFetcher?.data?.errors?.playlists?.[videoIndex]?.time || errors?.playlists?.[videoIndex]?.time) && (
                 <p className="text-sm text-red-600 mt-1 w-full">
                   {videoFetcher?.data?.errors?.playlists?.[videoIndex]?.time ||
                     errors?.playlists?.[videoIndex]?.time?.message}

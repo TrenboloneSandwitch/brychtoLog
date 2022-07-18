@@ -29,10 +29,7 @@ export default function VideosIndexRoute() {
       <ul className="mt-1">
         {data.videoListItem.map((video) => (
           <li key={video.id}>
-            <Link
-              to={video.id}
-              className="underline text-blue-600 hover:text-blue-800"
-            >
+            <Link to={video.id} className="underline text-blue-600 hover:text-blue-800">
               {video.name}
             </Link>
           </li>

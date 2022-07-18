@@ -1,3 +1,44 @@
 {
-  "extends": ["@remix-run/eslint-config", "@remix-run/eslint-config/node"]
+  "extends": ["@remix-run/eslint-config", "@remix-run/eslint-config/node", "plugin:prettier/recommended"],
+  "plugins": ["react", "@typescript-eslint", "jest", "import"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true
+      },
+      "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
+      "sourceType": "module", // Allows for the use of imports
+      "project": "./tsconfig.json"
+  },
+  "root": true,
+  "ignorePatterns": ["*config.js", "server.js", "public", "build"],
+  "rules": {
+    "react/jsx-key": ["warn", { "checkFragmentShorthand": true }],
+    "no-console": "warn",
+    "linebreak-style": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 120
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.stories.*"
+      ],
+      "rules": {
+        "import/no-anonymous-default-export": "off"
+      }
+    },
+    {
+      "files": [
+        "**/*.spec.*"
+      ],
+      "rules": {
+        "react/jsx-filename-extension": "off"
+      }
+    }
+  ]
 }

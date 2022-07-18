@@ -8,16 +8,10 @@ export default function VideosRoute() {
         <Outlet />
         <div className="mt-5">
           <span className="font-bold">Menu ➡️ </span>
-          <Link
-            to="/videos"
-            className="underline text-blue-600 hover:text-blue-800 ml-2"
-          >
+          <Link to="/videos" className="underline text-blue-600 hover:text-blue-800 ml-2">
             Index
           </Link>
-          <Link
-            to="/videos/new"
-            className="underline text-blue-600 hover:text-blue-800 ml-2"
-          >
+          <Link to="/videos/new" className="underline text-blue-600 hover:text-blue-800 ml-2">
             New
           </Link>
         </div>
