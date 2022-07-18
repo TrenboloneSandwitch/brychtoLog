@@ -1,5 +1,5 @@
 name: CI
-on: [push]
+on: [push, pull_request]
 jobs:
   ts-check:
     name: Check Typescript
@@ -11,5 +11,7 @@ jobs:
 
       - name: Install packages
         run: yarn install --immutable --immutable-cache --check-cache
+      - name: Check EsLint
+        run: yarn eslint
       - name: Run TS Check
-        run: npm run typecheck
+        run: yarn typecheck
